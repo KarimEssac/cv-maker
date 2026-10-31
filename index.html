@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Write your CV, edit its LaTeX, and download the compiled PDF in a simple two-pane editor.">
+  <title>Folio | LaTeX CV editor</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%232551bf'/%3E%3Cpath d='M10 25V7h13M10 15h10' fill='none' stroke='white' stroke-width='3'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700&family=Onest:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="app-header">
+      <a class="wordmark" href="/" aria-label="Folio editor home"><svg viewBox="0 0 24 28" width="23" height="27" aria-hidden="true"><path d="M4 2h11l5 5v19H4zM15 2v6h5M8 13h8M8 17h8M8 21h5"/></svg>folio<span class="wordmark-period">.</span></a>
+      <div class="header-actions">
+        <button type="button" class="button button-quiet source-download" id="download-source" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 7-5 5 5 5m8-10 5 5-5 5m-3-14-2 18"/></svg><span>Export .tex</span></button>
+        <button type="button" class="button button-primary" id="download-pdf" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-4-4 4 4 4-4M4 16v5h16v-5"/></svg><span>Download PDF</span></button>
+      </div>
+    </header>
+
+    <main>
+      <div class="document-bar">
+        <div class="document-heading"><h1 class="document-title"><input id="cv-title" class="document-title-input" type="text" name="cv-title" aria-label="CV title" title="CV title and download filename" value="Untitled CV" placeholder="Untitled CV" maxlength="100" autocomplete="off" spellcheck="false" disabled><svg class="title-edit-icon" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="m15 4 5 5M4 20l5-1L21 7a2 2 0 0 0-4-4L5 15z"/></svg></h1><span class="template-label">Academic template</span></div>
+        <span class="save-status" id="save-status" role="status">Loading template…</span>
+      </div>
+
+      <div class="workspace">
+        <section class="editor-pane" aria-labelledby="editor-heading">
+          <div class="pane-toolbar editor-toolbar">
+            <h2 id="editor-heading" class="visually-hidden">CV editor</h2>
+            <div class="mode-switch" role="tablist" aria-label="Editor mode">
+              <button type="button" role="tab" id="writing-tab" aria-selected="true" aria-controls="writing-panel" tabindex="0"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 4 5 5M4 20l5-1L21 7a2 2 0 0 0-4-4L5 15z"/></svg>Writing</button>
+              <button type="button" role="tab" id="code-tab" aria-selected="false" aria-controls="code-panel" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 7-5 5 5 5m8-10 5 5-5 5m-3-14-2 18"/></svg>LaTeX</button>
+            </div>
+            <div class="toolbar-actions"><button type="button" class="icon-button" id="show-add-section" aria-label="Add a section" title="Add a section" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button><button type="button" class="icon-button" id="import-source" aria-label="Import a LaTeX file" title="Import a .tex file"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4m-4 4 4-4 4 4M4 15v6h16v-6"/></svg></button></div>
+            <input type="file" id="file-input" accept=".tex,text/plain,application/x-tex" hidden>
+          </div>
+
+          <div id="writing-panel" role="tabpanel" aria-labelledby="writing-tab" class="writing-panel">
+            <div class="editor-intro"><h2>Make it yours.</h2><p>Just write. We’ll take care of the LaTeX.</p></div>
+            <p class="visually-hidden" id="section-reorder-help">Drag a section using its grip to change the order. When the grip is focused, Arrow Up and Arrow Down move it one place. Escape cancels a drag. Personal details stay at the top.</p>
+            <div id="writing-fields"><p class="loading-copy">Opening your document…</p></div>
+            <details class="add-section-controls" id="add-section-controls" hidden>
+              <summary>Add a section</summary>
+              <form id="add-section-form" class="add-section-form">
+                <div class="field"><label for="add-section-type">Section</label><select id="add-section-type" name="section-type"><option value="custom">Custom section</option></select></div>
+                <div id="custom-section-options">
+                  <div class="field"><label for="new-section-title">Section name</label><input id="new-section-title" name="section-title" type="text" maxlength="100" placeholder="For example, Volunteering" autocomplete="off" required></div>
+                  <div class="field"><label for="new-section-format">Content format</label><select id="new-section-format" name="section-format"><option value="long">Text</option><option value="bullets">Bullet list</option></select></div>
+                </div>
+                <button type="submit" class="button button-quiet">Add section</button>
+              </form>
+            </details>
+          </div>
+
+          <div id="code-panel" role="tabpanel" aria-labelledby="code-tab" class="code-panel" hidden>
+            <div class="code-caption"><span>base.tex</span><span>Full document</span></div>
+            <div class="code-editor"><pre id="line-numbers" class="line-numbers" aria-hidden="true">1</pre><textarea id="source-editor" aria-label="LaTeX source code" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" wrap="off"></textarea></div>
+            <p class="code-help">Writing fields are linked through the <code>% @field</code> annotations.</p>
+          </div>
+
+          <div class="editor-footer"><span id="editor-count">Your document, your words.</span><div class="editor-footer-actions"><button type="button" class="text-button" id="undo-structure" title="Undo (Ctrl+Z)" hidden>Undo last change</button><button type="button" class="text-button" id="reset-template" disabled>Reset template</button></div></div>
+          <div class="reset-confirmation" id="reset-confirmation" hidden><p>Replace this draft with the blank template?</p><div><button type="button" class="button button-quiet" id="cancel-reset">Keep editing</button><button type="button" class="button button-quiet" id="confirm-reset">Reset draft</button></div></div>
+        </section>
+
+        <section class="preview-pane" aria-labelledby="preview-heading">
+          <div class="pane-toolbar preview-toolbar">
+            <h2 id="preview-heading">Preview</h2>
+            <span class="render-status" id="render-status" role="status" aria-live="polite">Preparing preview…</span>
+            <button type="button" class="icon-button" id="refresh-preview" aria-label="Recompile preview" title="Recompile now" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7v5h-5M4 17v-5h5M6 6a8 8 0 0 1 13 3M5 15a8 8 0 0 0 13 3"/></svg></button>
+          </div>
+          <div class="preview-stage" id="preview-stage" aria-busy="true">
+            <div class="preview-placeholder" id="preview-placeholder"><svg viewBox="0 0 32 40" width="40" height="50" aria-hidden="true"><path d="M3 1h18l8 8v30H3zM21 1v9h8M9 17h14M9 23h14M9 29h9"/></svg><h3>Your CV starts here.</h3><p id="preview-loading-message">Typesetting your first preview…</p><small>The first compile downloads fonts and packages. This can take a few minutes.</small></div>
+            <iframe id="pdf-preview" title="Compiled CV PDF preview" hidden></iframe>
+          </div>
+          <div class="compile-error" id="compile-error" role="alert" hidden><div class="error-heading"><strong>Let’s fix the LaTeX.</strong><button type="button" class="text-button" id="retry-compile">Try again</button></div><p id="error-message"></p><details><summary>Compiler details</summary><pre id="error-details"></pre></details></div>
+          <div class="preview-footer"><span id="page-info">A4 <span aria-hidden="true">/</span> 210 × 297 mm</span><a id="open-pdf" target="_blank" rel="noopener" hidden>Open PDF in a new tab<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7m-1-6L10 14M10 4H4v16h16v-6"/></svg></a></div>
+        </section>
+      </div>
+    </main>
+    <noscript><p class="noscript-message">Enable JavaScript to edit your CV and compile its PDF. The template is available as <a href="/base.tex" download>base.tex</a>.</p></noscript>
+  </div>
+</body>
+</html>

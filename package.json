@@ -1,0 +1,15 @@
+{
+  "name": "folio-latex-cv",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A framework-free LaTeX CV editor with a real PDF preview.",
+  "scripts": {
+    "start": "node server.mjs",
+    "dev": "node --watch server.mjs",
+    "setup:latex": "node scripts/setup-latex.mjs",
+    "test": "node --test tests/model.test.mjs",
+    "test:integration": "node --test tests/compiler.test.mjs"
+  },
+  "engines": { "node": ">=22" }
+}

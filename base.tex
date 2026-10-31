@@ -1,0 +1,508 @@
+% @structure v2
+% Personal-data-free CV template. Replace the content fields below.
+% Layout, section order, typography, and resume commands retained from the supplied base.
+
+\documentclass[a4paper,11pt]{article}
+
+% Package imports
+\usepackage{latexsym}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{ragged2e}
+\usepackage[empty]{fullpage}
+\usepackage{wrapfig}
+\usepackage{lipsum}
+\usepackage{tabularx}
+\usepackage{titlesec}
+\usepackage{geometry}
+\usepackage{marvosym}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{cfr-lm}
+\usepackage[T1]{fontenc}
+\usepackage{fontawesome5}
+
+% Color definitions
+\definecolor{darkblue}{RGB}{0,0,139}
+
+% Page layout
+\setlength{\multicolsep}{0pt}
+\pagestyle{fancy}
+\fancyhf{} % clear all header and footer fields
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\geometry{left=1.4cm, top=0.8cm, right=1.2cm, bottom=1cm}
+\setlength{\footskip}{5pt} % Addressing fancyhdr warning
+
+% Hyperlink setup (moved after fancyhdr to address warning)
+\usepackage[hidelinks]{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=darkblue,
+    filecolor=darkblue,
+    urlcolor=darkblue,
+}
+
+% Custom box settings
+\usepackage[most]{tcolorbox}
+\tcbset{
+    frame code={},
+    center title,
+    left=0pt,
+    right=0pt,
+    top=0pt,
+    bottom=0pt,
+    colback=gray!20,
+    colframe=white,
+    width=\dimexpr\textwidth\relax,
+    enlarge left by=-2mm,
+    boxsep=4pt,
+    arc=0pt,outer arc=0pt,
+}
+
+% URL style
+\urlstyle{same}
+
+% Text alignment
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Section formatting
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-7pt}]
+
+% Custom commands
+\newcommand{\resumeItem}[2]{
+  \item{
+    \textbf{#1}{\hspace{0.5mm}#2 \vspace{-0.5mm}}
+  }
+}
+
+\newcommand{\resumePOR}[3]{
+\vspace{0.5mm}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+        \textbf{#1}\hspace{0.3mm}#2 & \textit{\small{#3}}
+    \end{tabular*}
+    \vspace{-2mm}
+}
+
+\newcommand{\resumeSubheading}[4]{
+\vspace{0.5mm}\item
+    \begin{tabular*}{0.98\textwidth}[t]{l@{\extracolsep{\fill}}r}
+        \textbf{#1} & \textit{\footnotesize{#4}} \\
+        \textit{\footnotesize{#3}} &  \footnotesize{#2}\\
+    \end{tabular*}
+    \vspace{-2.4mm}
+}
+
+\newcommand{\resumeProject}[4]{
+\vspace{0.5mm}\item
+    \begin{tabular*}{0.98\textwidth}[t]{l@{\extracolsep{\fill}}r}
+        \textbf{#1} & \textit{\footnotesize{#3}} \\
+        \footnotesize{\textit{#2}} & \footnotesize{#4}
+    \end{tabular*}
+    \vspace{-2.4mm}
+}
+
+\newcommand{\resumeSubItem}[2]{\resumeItem{#1}{#2}\vspace{-4pt}}
+
+\renewcommand{\labelitemi}{$\vcenter{\hbox{\tiny$\bullet$}}$}
+\renewcommand{\labelitemii}{$\vcenter{\hbox{\tiny$\circ$}}$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=*,labelsep=1mm]}
+\newcommand{\resumeHeadingSkillStart}{\begin{itemize}[leftmargin=*,itemsep=1.7mm, rightmargin=2ex]}
+\newcommand{\resumeItemListStart}{\begin{itemize}[leftmargin=*,labelsep=1mm,itemsep=0.5mm]}
+
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}\vspace{2mm}}
+\newcommand{\resumeHeadingSkillEnd}{\end{itemize}\vspace{-2mm}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-2mm}}
+\newcommand{\cvsection}[1]{%
+\vspace{2mm}
+\begin{tcolorbox}
+    \textbf{\large #1}
+\end{tcolorbox}
+    \vspace{-4mm}
+}
+
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}%
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X}%
+\newcolumntype{C}{>{\centering\arraybackslash}X}%
+
+% Commands for icon sizing and positioning
+\newcommand{\socialicon}[1]{\raisebox{-0.05em}{\resizebox{!}{1em}{#1}}}
+\newcommand{\ieeeicon}[1]{\raisebox{-0.3em}{\resizebox{!}{1.3em}{#1}}}
+
+% Font options
+\newcommand{\headerfonti}{\fontfamily{phv}\selectfont} % Helvetica-like (similar to Arial/Calibri)
+\newcommand{\headerfontii}{\fontfamily{ptm}\selectfont} % Times-like (similar to Times New Roman)
+\newcommand{\headerfontiii}{\fontfamily{ppl}\selectfont} % Palatino (elegant serif)
+\newcommand{\headerfontiv}{\fontfamily{pbk}\selectfont} % Bookman (readable serif)
+\newcommand{\headerfontv}{\fontfamily{pag}\selectfont} % Avant Garde-like (similar to Trebuchet MS)
+\newcommand{\headerfontvi}{\fontfamily{cmss}\selectfont} % Computer Modern Sans Serif
+\newcommand{\headerfontvii}{\fontfamily{qhv}\selectfont} % Quasi-Helvetica (another Arial/Calibri alternative)
+\newcommand{\headerfontviii}{\fontfamily{qpl}\selectfont} % Quasi-Palatino (another elegant serif option)
+\newcommand{\headerfontix}{\fontfamily{qtm}\selectfont} % Quasi-Times (another Times New Roman alternative)
+\newcommand{\headerfontx}{\fontfamily{bch}\selectfont} % Charter (clean serif font)
+
+% Content fields. Keep @field annotations to enable the writing editor.
+% @field contact|Full name|text
+\newcommand{\cvName}{Your name}
+
+% @field contact|Phone|text
+\newcommand{\cvPhone}{+00 000 000 0000}
+
+% @field contact|Email|text
+\newcommand{\cvEmail}{you@example.com}
+
+% @field contact|Location|text
+\newcommand{\cvLocation}{City, Country}
+
+% @field contact|LinkedIn URL|url
+\newcommand{\cvLinkedin}{https://example.com/linkedin}
+
+% @field contact|GitHub URL|url
+\newcommand{\cvGithub}{https://example.com/github}
+
+% @field contact|Portfolio URL|url
+\newcommand{\cvPortfolio}{https://example.com/portfolio}
+
+% @field objective|Professional summary|long
+\newcommand{\cvObjective}{Describe your professional background, the work you enjoy, and the value you bring to a team. Focus on the experience and skills relevant to your next role.}
+
+% @field experience|First role: job title|text
+\newcommand{\cvRoleOne}{Job title}
+
+% @field experience|First role: employer|text
+\newcommand{\cvEmployerOne}{Company name}
+
+% @field experience|First role: location|text
+\newcommand{\cvWorkplaceOne}{City or Remote}
+
+% @field experience|First role: dates|text
+\newcommand{\cvWorkDatesOne}{Month Year - Present}
+
+% @field experience|First role: achievements (one per line)|bullets
+\newcommand{\cvWorkBulletsOne}{\item Describe a responsibility and its outcome.
+\item Explain a contribution using specific, accurate evidence.}
+
+% @field experience|Second role: job title|text
+\newcommand{\cvRoleTwo}{Previous job title}
+
+% @field experience|Second role: employer|text
+\newcommand{\cvEmployerTwo}{Previous company}
+
+% @field experience|Second role: location|text
+\newcommand{\cvWorkplaceTwo}{City or Remote}
+
+% @field experience|Second role: dates|text
+\newcommand{\cvWorkDatesTwo}{Month Year - Month Year}
+
+% @field experience|Second role: achievements (one per line)|bullets
+\newcommand{\cvWorkBulletsTwo}{\item Describe the work you delivered and the skills you used.
+\item Add an achievement relevant to the role you want.}
+
+% @field education|Qualification|text
+\newcommand{\cvDegree}{Degree or qualification}
+
+% @field education|Institution|text
+\newcommand{\cvSchool}{University or institution}
+
+% @field education|Location|text
+\newcommand{\cvSchoolLocation}{City, Country}
+
+% @field education|Dates|text
+\newcommand{\cvSchoolDates}{Month Year - Month Year}
+
+% @field education|Details (one per line)|bullets
+\newcommand{\cvSchoolBullets}{\item Relevant coursework, academic result, or final project.}
+
+% @field projects|First project: name|text
+\newcommand{\cvProjectOne}{Project name}
+
+% @field projects|First project: tools|text
+\newcommand{\cvProjectToolsOne}{Tools: technologies used}
+
+% @field projects|First project: dates|text
+\newcommand{\cvProjectDatesOne}{Month Year}
+
+% @field projects|First project: URL|url
+\newcommand{\cvProjectUrlOne}{https://example.com/project-one}
+
+% @field projects|First project: details (one per line)|bullets
+\newcommand{\cvProjectBulletsOne}{\item Explain the problem you solved and what you built.
+\item Describe your contribution, technical decisions, and results.}
+
+% @field projects|Second project: name|text
+\newcommand{\cvProjectTwo}{Another project}
+
+% @field projects|Second project: tools|text
+\newcommand{\cvProjectToolsTwo}{Tools: technologies used}
+
+% @field projects|Second project: dates|text
+\newcommand{\cvProjectDatesTwo}{Month Year}
+
+% @field projects|Second project: URL|url
+\newcommand{\cvProjectUrlTwo}{https://example.com/project-two}
+
+% @field projects|Second project: details (one per line)|bullets
+\newcommand{\cvProjectBulletsTwo}{\item Explain the purpose of the project and your role.
+\item Highlight a relevant feature, challenge, or outcome.}
+
+% @field skills|Programming languages|text
+\newcommand{\cvLanguages}{Your programming languages}
+
+% @field skills|Front-end development|text
+\newcommand{\cvFrontend}{Your front-end skills}
+
+% @field skills|Back-end development|text
+\newcommand{\cvBackend}{Your back-end skills}
+
+% @field skills|Advanced web development|text
+\newcommand{\cvAdvanced}{Your specialist web skills}
+
+% @field skills|Database systems|text
+\newcommand{\cvDatabases}{Your database skills}
+
+% @field skills|Other tools and technologies|text
+\newcommand{\cvTools}{Your tools and technologies}
+
+% @field skills|Soft skills|text
+\newcommand{\cvSoftSkills}{Your professional strengths}
+
+% @field certifications|Qualification 1: title and issuer|text
+\newcommand{\cvCertificateOne}{Certification title | Issuing organization}
+
+% @field certifications|Qualification 1: date|text
+\newcommand{\cvCertificateDateOne}{Month Year}
+
+% @field certifications|Qualification 1: URL|url
+\newcommand{\cvCertificateUrlOne}{https://example.com/certificate}
+
+% @field certifications|Qualification 2: title and issuer|text
+\newcommand{\cvCertificateTwo}{Certification title | Issuing organization}
+
+% @field certifications|Qualification 2: date|text
+\newcommand{\cvCertificateDateTwo}{Month Year}
+
+% @field certifications|Qualification 2: URL|url
+\newcommand{\cvCertificateUrlTwo}{https://example.com/certificate}
+
+% @field certifications|Qualification 3: title and issuer|text
+\newcommand{\cvCertificateThree}{Certification title | Issuing organization}
+
+% @field certifications|Qualification 3: date|text
+\newcommand{\cvCertificateDateThree}{Month Year}
+
+% @field certifications|Qualification 3: URL|url
+\newcommand{\cvCertificateUrlThree}{https://example.com/certificate}
+
+% @field certifications|Qualification 4: title and issuer|text
+\newcommand{\cvCertificateFour}{Certification title | Issuing organization}
+
+% @field certifications|Qualification 4: date|text
+\newcommand{\cvCertificateDateFour}{Month Year}
+
+% @field certifications|Qualification 4: URL|url
+\newcommand{\cvCertificateUrlFour}{https://example.com/certificate}
+
+% @field additional|Spoken languages|text
+\newcommand{\cvSpokenLanguages}{Language (proficiency), Language (proficiency)}
+
+% Optional contact rows omit empty items and their separators.
+\newif\ifcvContactSeparator
+\newcommand{\cvContactItem}[2]{%
+  \ifx#1\empty\else
+    \ifcvContactSeparator\ | \fi#2\cvContactSeparatortrue
+  \fi
+}
+\newcommand{\cvContactRow}[1]{%
+  \begingroup
+  \setbox0=\hbox{\small\cvContactSeparatorfalse #1}%
+  \ifdim\wd0>0pt
+    \vspace{-6mm}\begin{center}\usebox0\end{center}%
+  \fi
+  \endgroup
+}
+
+% @field skills|Skill heading|text
+\newcommand{\cvSkillHeadingA}{Programming Languages}
+
+% @field skills|Skill heading|text
+\newcommand{\cvSkillHeadingB}{Front-End Development}
+
+% @field skills|Skill heading|text
+\newcommand{\cvSkillHeadingC}{Back-End Development}
+
+% @field skills|Skill heading|text
+\newcommand{\cvSkillHeadingD}{Advanced Web Development}
+
+% @field skills|Skill heading|text
+\newcommand{\cvSkillHeadingE}{Database Systems}
+
+% @field skills|Skill heading|text
+\newcommand{\cvSkillHeadingF}{Other Tools \& Technologies}
+
+% @field skills|Skill heading|text
+\newcommand{\cvSkillHeadingG}{Soft Skills}
+
+\begin{document}
+\headerfontiii
+
+% Header
+\begin{center}
+  {\Huge\textbf{\cvName}}
+\end{center}
+% @contact-row-start details
+\cvContactRow{%
+% @contact cvPhone|Phone|cvPhone
+  \cvContactItem{\cvPhone}{\cvPhone}%
+% @endcontact cvPhone
+% @contact cvEmail|Email|cvEmail
+  \cvContactItem{\cvEmail}{\href{mailto:\cvEmail}{\cvEmail}}%
+% @endcontact cvEmail
+}
+% @contact-row-end details
+% @contact-row-start links
+\cvContactRow{%
+% @contact cvLinkedin|LinkedIn|cvLinkedin
+  \cvContactItem{\cvLinkedin}{\socialicon{\faLinkedin}\ \href{\cvLinkedin}{LinkedIn}}%
+% @endcontact cvLinkedin
+% @contact cvGithub|GitHub|cvGithub
+  \cvContactItem{\cvGithub}{\socialicon{\faGithub}\ \href{\cvGithub}{GitHub}}%
+% @endcontact cvGithub
+% @contact cvPortfolio|Portfolio|cvPortfolio
+  \cvContactItem{\cvPortfolio}{\socialicon{\faUserTie}\ \href{\cvPortfolio}{Portfolio}}%
+% @endcontact cvPortfolio
+}
+% @contact-row-end links
+% @contact-row-start location
+\cvContactRow{%
+% @contact cvLocation|Location|cvLocation
+  \cvContactItem{\cvLocation}{\cvLocation}%
+% @endcontact cvLocation
+}
+% @contact-row-end location
+\vspace{-6mm}
+
+% @section objective|Objective
+\section{\textbf{Objective}}
+\vspace{1mm}
+{\small \cvObjective\par}
+\vspace{-2mm}
+% @endsection objective
+
+% @section experience|Experience
+\section{\textbf{Experience}}
+\vspace{-0.4mm}
+\resumeSubHeadingListStart
+% @entry experienceA|Role|cvRoleOne,cvEmployerOne,cvWorkplaceOne,cvWorkDatesOne,cvWorkBulletsOne
+  \resumeSubheading{\cvRoleOne}{\cvWorkplaceOne}{\cvEmployerOne}{\cvWorkDatesOne}
+  \resumeItemListStart
+    \cvWorkBulletsOne
+  \resumeItemListEnd
+% @endentry experienceA
+% @entry experienceB|Role|cvRoleTwo,cvEmployerTwo,cvWorkplaceTwo,cvWorkDatesTwo,cvWorkBulletsTwo
+  \resumeSubheading{\cvRoleTwo}{\cvWorkplaceTwo}{\cvEmployerTwo}{\cvWorkDatesTwo}
+  \resumeItemListStart
+    \cvWorkBulletsTwo
+  \resumeItemListEnd
+% @endentry experienceB
+\resumeSubHeadingListEnd
+\vspace{-6mm}
+% @endsection experience
+
+% @section education|Education
+\section{\textbf{Education}}
+\vspace{-0.4mm}
+\resumeSubHeadingListStart
+% @entry educationA|Qualification|cvDegree,cvSchool,cvSchoolLocation,cvSchoolDates,cvSchoolBullets
+  \resumeSubheading{\cvDegree}{\cvSchoolLocation}{\cvSchool}{\cvSchoolDates}
+  \resumeItemListStart
+    \cvSchoolBullets
+  \resumeItemListEnd
+% @endentry educationA
+\resumeSubHeadingListEnd
+\vspace{-6mm}
+% @endsection education
+
+% @section projects|Projects
+\section{\textbf{Projects}}
+\vspace{-0.4mm}
+\resumeSubHeadingListStart
+% @entry projectsA|Project|cvProjectOne,cvProjectToolsOne,cvProjectDatesOne,cvProjectUrlOne,cvProjectBulletsOne
+  \resumeProject{\cvProjectOne}{\cvProjectToolsOne}{\cvProjectDatesOne}{\href{\cvProjectUrlOne}{\faGithub}}
+  \resumeItemListStart
+    \cvProjectBulletsOne
+  \resumeItemListEnd
+% @endentry projectsA
+% @entry projectsB|Project|cvProjectTwo,cvProjectToolsTwo,cvProjectDatesTwo,cvProjectUrlTwo,cvProjectBulletsTwo
+  \resumeProject{\cvProjectTwo}{\cvProjectToolsTwo}{\cvProjectDatesTwo}{\href{\cvProjectUrlTwo}{\faGithub}}
+  \resumeItemListStart
+    \cvProjectBulletsTwo
+  \resumeItemListEnd
+% @endentry projectsB
+\resumeSubHeadingListEnd
+\vspace{-6mm}
+% @endsection projects
+
+% @section skills|Skills
+\section{\textbf{Skills}}
+\vspace{-0.4mm}
+\resumeHeadingSkillStart
+% @entry skillsA|Skill|cvSkillHeadingA,cvLanguages
+  \resumeSubItem{\cvSkillHeadingA:}{\cvLanguages}
+% @endentry skillsA
+% @entry skillsB|Skill|cvSkillHeadingB,cvFrontend
+  \resumeSubItem{\cvSkillHeadingB:}{\cvFrontend}
+% @endentry skillsB
+% @entry skillsC|Skill|cvSkillHeadingC,cvBackend
+  \resumeSubItem{\cvSkillHeadingC:}{\cvBackend}
+% @endentry skillsC
+% @entry skillsD|Skill|cvSkillHeadingD,cvAdvanced
+  \resumeSubItem{\cvSkillHeadingD:}{\cvAdvanced}
+% @endentry skillsD
+% @entry skillsE|Skill|cvSkillHeadingE,cvDatabases
+  \resumeSubItem{\cvSkillHeadingE:}{\cvDatabases}
+% @endentry skillsE
+% @entry skillsF|Skill|cvSkillHeadingF,cvTools
+  \resumeSubItem{\cvSkillHeadingF:}{\cvTools}
+% @endentry skillsF
+% @entry skillsG|Skill|cvSkillHeadingG,cvSoftSkills
+  \resumeSubItem{\cvSkillHeadingG:}{\cvSoftSkills}
+% @endentry skillsG
+\resumeHeadingSkillEnd
+% @endsection skills
+
+% @section certifications|Certifications
+\section{\textbf{Certifications}}
+\vspace{-0.2mm}
+\resumeSubHeadingListStart
+% @entry certificationsA|Certification|cvCertificateOne,cvCertificateDateOne,cvCertificateUrlOne
+  \resumePOR{}{\href{\cvCertificateUrlOne}{\textbf{\cvCertificateOne}}}{\cvCertificateDateOne}
+% @endentry certificationsA
+% @entry certificationsB|Certification|cvCertificateTwo,cvCertificateDateTwo,cvCertificateUrlTwo
+  \resumePOR{}{\href{\cvCertificateUrlTwo}{\textbf{\cvCertificateTwo}}}{\cvCertificateDateTwo}
+% @endentry certificationsB
+% @entry certificationsC|Certification|cvCertificateThree,cvCertificateDateThree,cvCertificateUrlThree
+  \resumePOR{}{\href{\cvCertificateUrlThree}{\textbf{\cvCertificateThree}}}{\cvCertificateDateThree}
+% @endentry certificationsC
+% @entry certificationsD|Certification|cvCertificateFour,cvCertificateDateFour,cvCertificateUrlFour
+  \resumePOR{}{\href{\cvCertificateUrlFour}{\textbf{\cvCertificateFour}}}{\cvCertificateDateFour}
+% @endentry certificationsD
+\resumeSubHeadingListEnd
+\vspace{-6mm}
+% @endsection certifications
+
+% @section additional|Additional Information
+\section{\textbf{Additional Information}}
+\vspace{-0.4mm}
+{\small \textbf{Languages:} \cvSpokenLanguages\par}
+\vspace{-3mm}
+% @endsection additional
+
+\end{document}
